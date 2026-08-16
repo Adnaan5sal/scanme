@@ -1,16 +1,22 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/Adnaan5sal/scanme/master/.github/assets/banner.svg" alt="scanme — proof-based security for Claude Code" width="100%">
+<img src="https://raw.githubusercontent.com/Adnaan5sal/scanme/master/.github/assets/banner.svg" alt="scanme — proof-based security for AI coding agents" width="100%">
 
 <br>
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-16a34a?style=flat-square)](LICENSE)
-[![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-2563eb?style=flat-square)](https://github.com/Adnaan5sal/scanme)
+[![Agent-agnostic](https://img.shields.io/badge/works%20with-any%20AI%20coding%20agent-2563eb?style=flat-square)](AGENTS.md)
 [![Zero dependencies](https://img.shields.io/badge/demo-zero%20dependencies-d97706?style=flat-square)](demo/README.md)
-[![Proof-tiered](https://img.shields.io/badge/findings-proof--tiered-dc2626?style=flat-square)](SKILL.md)
+[![Proof-tiered](https://img.shields.io/badge/findings-proof--tiered-dc2626?style=flat-square)](AGENTS.md)
 [![Stars](https://img.shields.io/github/stars/Adnaan5sal/scanme?style=flat-square&color=eab308)](https://github.com/Adnaan5sal/scanme/stargazers)
 
-**One Claude Code skill. Eight modes. One rule: a finding does not exist until it's proven.**
+**One set of agent instructions. Eight modes. One rule: a finding does not exist until it's proven.**
+
+Works with **Claude Code, Cursor, Aider, Codex CLI, GitHub Copilot Workspace,
+Windsurf** — or any AI coding agent that can read a file and run shell
+commands. No lock-in: the methodology is a plain Markdown file
+([AGENTS.md](AGENTS.md)) and the engine underneath is dependency-free
+Python/Bash scripts any agent can call directly.
 
 [See it prove a real bug in 20 seconds ↓](#see-it-work--20-seconds-no-install) · [Live dashboard demo](https://claude.ai/code/artifact/3f29f754-771d-444f-b756-9c60da0c921a) · [Install](#install)
 
@@ -18,7 +24,7 @@
 
 ---
 
-The name is a dare, not an invitation: this audits code *you* control, never a live site you don't own or haven't been authorized to test. See [Scope and authorization](SKILL.md#scope-and-authorization).
+The name is a dare, not an invitation: this audits code *you* control, never a live site you don't own or haven't been authorized to test. See [Scope and authorization](AGENTS.md#scope-and-authorization).
 
 Most security scanners hand you 200 findings. You check the first five, four are wrong, and you stop reading. The real vulnerability was #47.
 
@@ -165,6 +171,19 @@ Then the full write-up per finding:
 
 ## Install
 
+**Any agent:**
+
+```bash
+git clone https://github.com/Adnaan5sal/scanme
+```
+
+Then point your agent at `AGENTS.md` — either paste its path into your first
+message, or copy/symlink it into wherever your tool auto-reads project
+instructions from (many already do: Cursor's `.cursor/rules`, Aider's
+`CONVENTIONS.md`, Codex CLI reads `AGENTS.md` natively).
+
+**Claude Code — one command:**
+
 ```bash
 npx skills add https://github.com/Adnaan5sal/scanme --agent claude-code -g
 ```
@@ -173,11 +192,11 @@ Or drop the folder into `~/.claude/skills/`.
 
 ## Use
 
-```
-/scanme
-```
-
-Or just describe what you want — "audit this before I launch", "find security holes in my app", "which of these scanner findings are real?"
+Describe what you want — "audit this before I launch," "find security holes
+in my app," "which of these scanner findings are real," "add security
+headers," "is my AI app secure." Every mode in [AGENTS.md](AGENTS.md)
+triggers on natural language; there's no special syntax to memorize. Claude
+Code users can also invoke it directly with `/scanme`.
 
 ---
 
@@ -216,7 +235,7 @@ Every mode — including Swarm Mode's multi-agent findings — writes to the
 same ledger the flagship demo above uses. One install, one finding store,
 one report format, whichever mode touched the code.
 
-Full routing table and detail in [SKILL.md](SKILL.md).
+Full routing table and detail in [AGENTS.md](AGENTS.md) (Claude Code users: [SKILL.md](SKILL.md) has the Claude-specific glue).
 
 ---
 
@@ -254,6 +273,6 @@ So this skill is built to be **boring and trustworthy**: it discards aggressivel
 
 **If a finding you can act on immediately is worth more to you than 200 you can't, [star this repo](https://github.com/Adnaan5sal/scanme) →** ⭐
 
-<sub>MIT License · Built for <a href="https://github.com/Adnaan5sal/scanme/blob/master/SKILL.md">Claude Code</a></sub>
+<sub>MIT License · Agent-agnostic — see <a href="https://github.com/Adnaan5sal/scanme/blob/master/AGENTS.md">AGENTS.md</a></sub>
 
 </div>

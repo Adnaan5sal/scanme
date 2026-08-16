@@ -32,7 +32,7 @@
   <text x="220" y="150" font-family="'Segoe UI', system-ui, sans-serif" font-size="72"
         font-weight="800" fill="#e5e7eb">scan<tspan fill="#16a34a">me</tspan></text>
   <text x="222" y="188" font-family="'Segoe UI', system-ui, sans-serif" font-size="21"
-        fill="#9ca3af">Proof-based security for Claude Code — one skill, every mode.</text>
+        fill="#9ca3af">Proof-based security for any AI coding agent.</text>
 
   <g font-family="'Segoe UI', system-ui, sans-serif" font-size="14" fill="#9ca3af">
     <g transform="translate(222,220)">
