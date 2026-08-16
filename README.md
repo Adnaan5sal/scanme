@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src=".github/assets/banner.png" alt="scanme — proof-based security for AI coding agents" width="100%">
+<img src=".github/assets/banner.png" alt="scanme — get your code checked before it goes live" width="100%">
 
 <br>
 
@@ -11,11 +11,13 @@
 [![Proof-tiered](https://img.shields.io/badge/findings-proof--tiered-dc2626?style=flat-square)](AGENTS.md)
 [![Stars](https://img.shields.io/github/stars/Adnaan5sal/scanme?style=flat-square&color=eab308)](https://github.com/Adnaan5sal/scanme/stargazers)
 
-# Don't report vulnerabilities.<br>Prove them.
+# Get your code checked before it goes live.
 
-**Universal, agent-agnostic security auditing for AI-generated code.**
-Reproduce vulnerabilities, fix them, and verify the fix with a regression
-test that fails before the fix exists and passes after.
+**Don't report vulnerabilities. Prove them.**
+Most scanners are a symptom checker — they list everything that *could* be
+wrong and leave you to figure out what's actually dangerous. scanme is a
+full workup: it doesn't say something looks off, it reproduces the
+problem, treats it, and confirms the treatment held before you ship.
 
 [See it prove a real bug in 20 seconds ↓](#the-first-15-seconds) · [Live dashboard demo](https://claude.ai/code/artifact/3f29f754-771d-444f-b756-9c60da0c921a) · [Install](#quick-start)
 
