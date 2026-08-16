@@ -61,6 +61,15 @@ If you cannot prove something, you do not report it as a vulnerability. You
 put it in the unverified-leads appendix and say plainly that you could not
 confirm it. That honesty is the product.
 
+**Before working through any mode, read [references/doctrine.md](references/doctrine.md).**
+It's eight hard-won judgment calls — why false positives are the mechanism
+that gets real vulnerabilities ignored, why "not checked" beats an unearned
+"OK," how to rank severity by consequence instead of category, why a fix
+without a regression test has a return date. The workflow below tells you
+what to do in each phase. The doctrine is why those are the right things to
+do, and it's what should guide you the moment a situation doesn't map
+cleanly onto a documented rule.
+
 ## Scope and authorization
 
 Audit **code and systems the user controls** — their repository, their local

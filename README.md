@@ -95,6 +95,8 @@ everyone believes it's closed.
 
 ## The two rules
 
+*(The judgment underneath both of these — why false positives are the exact mechanism that gets real vulnerabilities ignored, how to rank severity by consequence instead of category, why a fix without a regression test has a return date — is written out in [references/doctrine.md](references/doctrine.md). Read it once; it's eight principles, not eighty.)*
+
 **1. A finding does not exist until it's proven.**
 
 Every candidate must reach one of these bars:
