@@ -1,6 +1,22 @@
-# scanme
+<div align="center">
 
-**A Claude Code skill that only reports vulnerabilities it can prove — and fixes them with a regression test that fails before the fix and passes after.**
+<img src="https://raw.githubusercontent.com/Adnaan5sal/scanme/master/.github/assets/banner.svg" alt="scanme — proof-based security for Claude Code" width="100%">
+
+<br>
+
+[![License: MIT](https://img.shields.io/badge/license-MIT-16a34a?style=flat-square)](LICENSE)
+[![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-2563eb?style=flat-square)](https://github.com/Adnaan5sal/scanme)
+[![Zero dependencies](https://img.shields.io/badge/demo-zero%20dependencies-d97706?style=flat-square)](demo/README.md)
+[![Proof-tiered](https://img.shields.io/badge/findings-proof--tiered-dc2626?style=flat-square)](SKILL.md)
+[![Stars](https://img.shields.io/github/stars/Adnaan5sal/scanme?style=flat-square&color=eab308)](https://github.com/Adnaan5sal/scanme/stargazers)
+
+**One Claude Code skill. Eight modes. One rule: a finding does not exist until it's proven.**
+
+[See it prove a real bug in 20 seconds ↓](#see-it-work--20-seconds-no-install) · [Live dashboard demo](https://claude.ai/code/artifact/3f29f754-771d-444f-b756-9c60da0c921a) · [Install](#install)
+
+</div>
+
+---
 
 The name is a dare, not an invitation: this audits code *you* control, never a live site you don't own or haven't been authorized to test. See [Scope and authorization](SKILL.md#scope-and-authorization).
 
@@ -223,6 +239,21 @@ So this skill is built to be **boring and trustworthy**: it discards aggressivel
 
 ---
 
-## License
+## Star History
 
-MIT
+<a href="https://star-history.com/#Adnaan5sal/scanme&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Adnaan5sal/scanme&type=Date&theme=dark" />
+    <img src="https://api.star-history.com/svg?repos=Adnaan5sal/scanme&type=Date" alt="Star History Chart" width="100%" />
+  </picture>
+</a>
+
+---
+
+<div align="center">
+
+**If a finding you can act on immediately is worth more to you than 200 you can't, [star this repo](https://github.com/Adnaan5sal/scanme) →** ⭐
+
+<sub>MIT License · Built for <a href="https://github.com/Adnaan5sal/scanme/blob/master/SKILL.md">Claude Code</a></sub>
+
+</div>
