@@ -1,0 +1,40 @@
+name: demo
+
+# Runs the actual flagship demo on every push/PR - not a placeholder badge.
+# If this goes red, the README's central claim (scanme proves a real IDOR
+# and SQLi, fixes them, and regression-tests the fix) is no longer true and
+# should not be shipped.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  vulnshop-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Run the vulnshop demo end to end
+        working-directory: demo/vulnshop
+        run: bash run_demo.sh
+
+      - name: Run the regression test suite directly
+        working-directory: demo/vulnshop
+        run: node --test test_order_idor.js test_search_sqli.js
+
+      - name: Verify all scripts parse (syntax check)
+        run: |
+          for f in scripts/*.py; do python -m py_compile "$f"; done
+          for f in scripts/*.sh; do bash -n "$f"; done
