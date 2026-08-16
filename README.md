@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/Adnaan5sal/scanme/master/.github/assets/banner.svg" alt="scanme — proof-based security for AI coding agents" width="100%">
+<img src=".github/assets/banner.png" alt="scanme — proof-based security for AI coding agents" width="100%">
 
 <br>
 
