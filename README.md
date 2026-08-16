@@ -150,7 +150,7 @@ Then the full write-up per finding:
 ## Install
 
 ```bash
-npx skills add https://github.com/<your-username>/scanme --agent claude-code -g
+npx skills add https://github.com/Adnaan5sal/scanme --agent claude-code -g
 ```
 
 Or drop the folder into `~/.claude/skills/`.
@@ -177,6 +177,25 @@ Ordered by how often these turn out to be real *and* serious in AI-assisted code
 6. **SSRF** — especially cloud metadata endpoints.
 7. **Misconfiguration** — CORS, cookie flags, leaked stack traces.
 8. **Dependencies** — filtered by whether the vulnerable path is *actually reachable*, not raw `npm audit` output.
+
+---
+
+## Also does
+
+The proof-tiered audit above is the core, but everything below shares its
+proof discipline and its finding store — one audit trail per project, not a
+pile of differently-formatted documents.
+
+| Ask for... | You get |
+|---|---|
+| Guardrails while you build auth/API/payment code | **Guard Mode** — inline while writing, or `bash scripts/install_guard.sh` for a permanent hook |
+| A compliance / SOC 2 / PCI DSS readiness pass | **Compliance Mode** — 35 sections, tagged `[code]`/`[confirm]`/`[specialist]`, with sampling strategy and materiality thresholds, not just a checklist |
+| "Is my AI app secure" | **AI Security Mode** — indirect prompt injection, RAG tenant isolation, agent/tool sandboxing, cost abuse |
+| Security headers / CSP | **Headers Mode** — inventories what the app actually loads before writing a policy |
+| A standing security test suite | **Test Generation** — the authorization-matrix pattern, wired into CI |
+| "Make this production ready" (beyond security) | **Readiness Mode** — error handling, performance, deploy config, accessibility, dependency health |
+
+Full routing table and detail in [SKILL.md](SKILL.md).
 
 ---
 

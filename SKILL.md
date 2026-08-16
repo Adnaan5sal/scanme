@@ -1,20 +1,56 @@
 ---
 name: scanme
 description: >
-  Security audit for web apps and AI-assisted / "vibe coded" codebases that
-  reports only vulnerabilities it has actually proven, and fixes them with a
-  regression test that fails before the fix and passes after. Use whenever the
-  user asks for a security audit, penetration-style review, vulnerability scan,
-  "find security issues", "is my app safe to ship", "harden this", "check for
-  loopholes", "audit my codebase before launch", or wants exposed secrets, SQL
-  injection, XSS, IDOR/broken access control, SSRF, or auth bypasses found and
-  fixed. Also use when a previous scanner produced a pile of findings and the
-  user wants to know which ones are real. Covers reachability analysis,
-  exploit reproduction, and verified remediation — it will not report a finding
-  it cannot demonstrate.
+  Full-spectrum security, compliance, and production-readiness skill for web
+  apps and AI-assisted / "vibe coded" codebases. Its core is a proof-based
+  vulnerability audit that reports only findings it has actually reproduced
+  or traced, and fixes them with a regression test that fails before the fix
+  and passes after — plus inline guardrails while code is being written, a
+  35-section formal compliance audit, AI/LLM-specific threat modeling, CSP
+  and security-header generation, standing security test suites, and a
+  broader production-readiness pass (error handling, performance, deploy
+  config, accessibility, dependencies). Use whenever the user asks for a
+  security audit, penetration-style review, vulnerability scan, "find
+  security issues", "is my app safe to ship", "harden this", "make this
+  production ready", "compliance audit", "SOC 2 / ISO 27001 / PCI DSS
+  readiness", "launch checklist", "is my AI app secure", "prompt injection",
+  "add security headers" / CSP, "write me security tests", or wants exposed
+  secrets, SQL injection, XSS, IDOR/broken access control, SSRF, or auth
+  bypasses found and fixed. Also use when a previous scanner produced a pile
+  of findings and the user wants to know which ones are real, or when the
+  user wants guardrails applied automatically while building auth/API/
+  payment code. All modes share one proof discipline and one finding store —
+  it will not report a finding it cannot demonstrate.
 ---
 
 # scanme
+
+## One system, several modes
+
+Everything below shares two things: the same proof discipline (a finding
+does not exist until it's proven — or is explicitly marked as a checklist
+item, a lead, or a guideline, never presented as more certain than it is),
+and the same finding store and report generator (`scripts/findings.py`), so
+a project accumulates *one* coherent audit trail across however many modes
+touch it, not a pile of differently-formatted documents that drift apart.
+
+| The request sounds like... | Mode | Detail |
+|---|---|---|
+| "audit my app", "find vulnerabilities", "is this safe to ship" | **Audit Mode** (below) | The flagship — proof-tiered, fix-with-test, the finding store |
+| Building auth/API/payment/upload code right now | **Guard Mode** | [guard-mode.md](references/guard-mode.md) |
+| "harden this before I deploy" (fast, not full-audit) | **Guard Mode → fast pass** | same file |
+| "compliance audit", "SOC 2 readiness", "launch checklist" | **Compliance Mode** | [compliance-methodology.md](references/compliance-methodology.md) |
+| Anything with an LLM: chatbot, RAG, agent, tool-calling | **AI Security Mode** | [ai-threats.md](references/ai-threats.md) |
+| "add security headers", CSP, header-scanner grade | **Headers Mode** | [security-headers.md](references/security-headers.md) |
+| "write me security tests", standing CI coverage | **Test Generation** | [test-patterns.md](references/test-patterns.md) |
+| "production ready", "deploy ready", non-security bug sweep | **Readiness Mode** | [production-readiness.md](references/production-readiness.md) |
+
+If a request is ambiguous, default to Audit Mode — it's the most rigorous and
+the others fold naturally out of it (Guard Mode is Audit Mode's checklist
+applied while writing instead of after; Compliance Mode is Audit Mode's
+findings mapped onto a formal framework).
+
+---
 
 ## The one rule
 
@@ -50,9 +86,12 @@ problem for them, not a thoroughness win. This isn't a formality — a request
 like "audit example.com for me" needs an explicit "yes, I own this / I have
 written authorization" before any active probing.
 
-Static review of source code the user hands you is always fine.
+Static review of source code the user hands you is always fine. This applies
+across every mode, not just Audit Mode.
 
-## Workflow
+---
+
+## Audit Mode — the proof-tiered vulnerability workflow
 
 ### Phase 0 — Load prior state
 
@@ -142,6 +181,9 @@ catch them, and they are the highest-severity classes in practice. Read
 [references/vulnerability-classes.md](references/vulnerability-classes.md) and
 work them against your Phase 1 surface map by hand. `find_candidates.sh` gives
 a regex starting point but its output is not auto-ingested; read it yourself.
+The same classes, written for prevention instead of detection, are in
+[guardrails-security.md](references/guardrails-security.md) if you want the
+"how to write it correctly" framing while fixing something in Phase 4.
 
 Record anything you find manually into the store so it gets the same tracking
 as scanner output.
@@ -197,6 +239,9 @@ scan from re-raising it and stops the next person from re-investigating it.
 For every Tier 1 / Tier 2 finding you're going to fix, the sequence matters:
 
 1. **Write the regression test first**, encoding the exploit as a test case.
+   [test-patterns.md](references/test-patterns.md) has the concrete patterns
+   if this is more than a one-off (authorization matrix, auth rules, input
+   handling, rate limiting, sessions).
 2. **Run it against the unfixed code and watch it fail.** This step is not
    optional and not a formality. A test that passes before you fix anything is
    a broken test — it isn't detecting the vulnerability, and if you'd skipped
@@ -293,17 +338,145 @@ users are affected. Say the reasoning out loud in the report. Inflated severity
 is the second-most-common way security tooling loses trust, right after false
 positives.
 
+---
+
+## Guard Mode — while code is being written
+
+Full detail in [references/guard-mode.md](references/guard-mode.md). Two
+uses: **inline**, applying [guardrails-security.md](references/guardrails-security.md)
+and [guardrails-reliability.md](references/guardrails-reliability.md) *as*
+code is written (the moment you're about to write
+`Model.findById(req.params.id)` with no ownership scoping is the moment to
+add the scoping, not a finding for later); and a **fast pass** before
+shipping that's quicker but weaker evidence than full Audit Mode, routing its
+findings through the same store and the same `scorecard`/`report` output —
+there is deliberately one report format, not two.
+
+One-time setup for permanent inline coverage:
+`bash scripts/install_guard.sh` — wires a `PreToolUse` hook so every
+Write/Edit gets checked automatically, silent unless something matches,
+never blocks. Offer to run it; don't run it silently.
+
+## Compliance Mode — formal 35-section audit
+
+Full detail across
+[compliance-methodology.md](references/compliance-methodology.md) (sampling
+strategy, evidence standards, materiality thresholds — what separates this
+from a checklist),
+[compliance-checklist-core.md](references/compliance-checklist-core.md)
+(§1–15: governance, architecture, auth, authz, sessions, input, injection,
+XSS, CSRF, API, database, secrets, uploads, frontend, headers),
+[compliance-checklist-operations.md](references/compliance-checklist-operations.md)
+(§16–28: CORS, dependencies, infrastructure, CDN/WAF, logging, monitoring,
+error handling, backups, availability, CI/CD, security testing, vulnerability
+management, incident response), and
+[compliance-checklist-specialized.md](references/compliance-checklist-specialized.md)
+(§29–35: privacy, third-party, payment, AI/LLM, admin, compliance
+documentation, the final production gate).
+
+Every item is tagged **[code]** (verify by reading source — do this),
+**[confirm]** (ask the user — infrastructure, process, backups-actually-
+tested; group these into one set of questions), or **[specialist]**
+(compliance/legal/PCI-QSA territory — flag it, don't improvise it). Read
+[priorities.md](references/priorities.md) for the reference architecture
+diagram and the "10 things to never skip" list to lead the report's summary
+with what actually matters most, before the full 35-section detail.
+
+Findings from Compliance Mode go through the same finding store as Audit
+Mode — a §4 authorization gap found here and one found by a full Audit Mode
+pass are the same kind of finding, tracked the same way, appearing in the
+same report.
+
+## AI Security Mode — LLM-specific threats
+
+Full detail in [ai-threats.md](references/ai-threats.md): indirect prompt
+injection, RAG authorization and tenant isolation, agent/tool privilege,
+output handling, cost/abuse controls, data privacy. Only applicable when the
+app calls an LLM.
+
+The one thing to hold onto: **a system prompt is a request, not a security
+boundary.** "The system prompt says not to reveal other users' data" can be
+argued with by an attacker; a query filter cannot. Fixes here are
+architectural (a missing tenant filter, an unvalidated tool argument, a
+missing spending cap) not prompt-level ("please don't reveal secrets" added
+to the system prompt is defense in depth at best, never *the* fix).
+
+Prompt-injection resistance is probabilistic, unlike SQL injection — "I tried
+three injections and they didn't work" is not evidence of safety. What's
+provable is containment: whether a successful injection could reach anything
+consequential. Same Tier 1/2/3 proof discipline as everywhere else in this
+skill.
+
+## Headers Mode — CSP and security headers
+
+Full detail in [security-headers.md](references/security-headers.md):
+inventory what the app actually loads (static + runtime) before writing a
+policy, deploy `Content-Security-Policy-Report-Only` before enforcing, verify
+headers are on the *actual response* not just the config file. A generic
+copy-paste CSP either breaks the site or does nothing — the useful policy can
+only be derived from what this specific app loads.
+
+## Test Generation — widening coverage beyond one fix
+
+Phase 4 above writes one test per proven finding. When the ask is bigger —
+"write me security tests", "how do I stop this class of bug coming back" —
+read [test-patterns.md](references/test-patterns.md) for the authorization
+matrix pattern (the single highest-value thing to generate, since broken
+access control is both the most common serious vulnerability and the one
+most likely to be silently reintroduced by ordinary feature work), plus
+authentication, input-handling, rate-limit, and session test patterns.
+
+Same verification discipline applies: a test that has never gone red is not
+known to detect anything. Temporarily break the code the test is supposed to
+guard, confirm the test fails, restore the code, confirm it passes.
+
+## Readiness Mode — beyond security
+
+Full detail in
+[production-readiness.md](references/production-readiness.md): error
+handling, code quality, performance, deploy/config readiness, accessibility,
+dependency health. This is what "make this production ready" or "check my
+app before I deploy" usually means beyond the security surface —
+`scan_common_issues.sh` gives a fast first pass, same discipline as
+everywhere else: every hit is a lead to verify, not a finding.
+
+Security findings surfaced during a readiness pass route through Audit Mode
+(they need proof and a regression test, not a quick patch) — don't
+re-derive vulnerability findings here that belong in the main workflow.
+
+---
+
 ## What this skill does not do
 
-Say this plainly in the report rather than letting the user assume otherwise:
+Say this plainly in reports rather than letting the user assume otherwise:
 
 - It is a **code audit**, not a penetration test. It does not test running
-  infrastructure, network configuration, DNS, TLS setup, or cloud IAM.
+  infrastructure, network configuration, DNS, TLS setup, or cloud IAM —
+  those are [confirm]/[specialist] items in Compliance Mode, not something
+  any mode here can verify from source.
 - It cannot prove the *absence* of vulnerabilities. "No proven findings" means
-  exactly that — not "this app is secure."
+  exactly that — not "this app is secure." A clean grade describes what was
+  examined and nothing else.
 - It won't catch business-logic flaws that depend on understanding what the
   product is supposed to do (a discount that can be applied twice, a workflow
   state that can be skipped) unless the user explains the intended behavior.
+- Guard Mode and the fast pass reduce the *rate* of common, well-understood
+  mistakes getting written — they do not make an application invulnerable,
+  and never say or imply that.
+- Prompt-injection resistance in AI Security Mode is never provable by
+  testing, only architectural containment is.
+- Compliance Mode produces internal working documentation that prepares for
+  a formal certification (SOC 2, ISO 27001, PCI DSS) — it does not
+  substitute for one, and does not draft legal/compliance language.
 
 Overstating coverage is how security tools get people hurt. Be exact about
-what was and wasn't examined.
+what was and wasn't examined, in every mode.
+
+## Demo
+
+[demo/README.md](demo/README.md) walks through Audit Mode end to end against
+a real vulnerable API — two criticals a 225-rule Semgrep scan misses
+entirely, both exploited over HTTP, fixed with test-first regression
+coverage, and a simulated regression caught precisely by the finding store.
+`bash demo/vulnshop/run_demo.sh` reproduces it in about 20 seconds, no
+install required.
