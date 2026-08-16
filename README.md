@@ -194,6 +194,11 @@ pile of differently-formatted documents.
 | Security headers / CSP | **Headers Mode** — inventories what the app actually loads before writing a policy |
 | A standing security test suite | **Test Generation** — the authorization-matrix pattern, wired into CI |
 | "Make this production ready" (beyond security) | **Readiness Mode** — error handling, performance, deploy config, accessibility, dependency health |
+| Multi-agent pentest, live/dynamic testing, third-party target | **Swarm Mode** — parallel specialist subagents, sandboxed exploit execution (Docker or a resource-limited fallback that says so), real browser-based XSS/CSRF testing, an HTML dashboard, auto-fix PRs behind an explicit confirmation gate |
+
+Every mode — including Swarm Mode's multi-agent findings — writes to the
+same ledger the flagship demo above uses. One install, one finding store,
+one report format, whichever mode touched the code.
 
 Full routing table and detail in [SKILL.md](SKILL.md).
 

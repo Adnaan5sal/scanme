@@ -7,18 +7,22 @@ description: >
   or traced, and fixes them with a regression test that fails before the fix
   and passes after — plus inline guardrails while code is being written, a
   35-section formal compliance audit, AI/LLM-specific threat modeling, CSP
-  and security-header generation, standing security test suites, and a
-  broader production-readiness pass (error handling, performance, deploy
-  config, accessibility, dependencies). Use whenever the user asks for a
+  and security-header generation, standing security test suites, a broader
+  production-readiness pass (error handling, performance, deploy config,
+  accessibility, dependencies), and an autonomous multi-agent "swarm" mode
+  (parallel specialist subagents, sandboxed exploit execution, live/browser
+  dynamic testing with an authorization gate for third-party targets, an
+  HTML dashboard, and auto-fix PRs). Use whenever the user asks for a
   security audit, penetration-style review, vulnerability scan, "find
   security issues", "is my app safe to ship", "harden this", "make this
   production ready", "compliance audit", "SOC 2 / ISO 27001 / PCI DSS
   readiness", "launch checklist", "is my AI app secure", "prompt injection",
-  "add security headers" / CSP, "write me security tests", or wants exposed
-  secrets, SQL injection, XSS, IDOR/broken access control, SSRF, or auth
-  bypasses found and fixed. Also use when a previous scanner produced a pile
-  of findings and the user wants to know which ones are real, or when the
-  user wants guardrails applied automatically while building auth/API/
+  "add security headers" / CSP, "write me security tests", "multi-agent
+  pentest", "autonomous security testing", a dashboard of findings, or wants
+  exposed secrets, SQL injection, XSS, IDOR/broken access control, SSRF, or
+  auth bypasses found and fixed. Also use when a previous scanner produced a
+  pile of findings and the user wants to know which ones are real, or when
+  the user wants guardrails applied automatically while building auth/API/
   payment code. All modes share one proof discipline and one finding store —
   it will not report a finding it cannot demonstrate.
 ---
@@ -44,6 +48,7 @@ touch it, not a pile of differently-formatted documents that drift apart.
 | "add security headers", CSP, header-scanner grade | **Headers Mode** | [security-headers.md](references/security-headers.md) |
 | "write me security tests", standing CI coverage | **Test Generation** | [test-patterns.md](references/test-patterns.md) |
 | "production ready", "deploy ready", non-security bug sweep | **Readiness Mode** | [production-readiness.md](references/production-readiness.md) |
+| "multi-agent pentest", live/dynamic testing, third-party target, dashboard | **Swarm Mode** | [agent-personas.md](references/agent-personas.md) |
 
 If a request is ambiguous, default to Audit Mode — it's the most rigorous and
 the others fold naturally out of it (Guard Mode is Audit Mode's checklist
@@ -443,6 +448,58 @@ everywhere else: every hit is a lead to verify, not a finding.
 Security findings surfaced during a readiness pass route through Audit Mode
 (they need proof and a regression test, not a quick patch) — don't
 re-derive vulnerability findings here that belong in the main workflow.
+
+## Swarm Mode — autonomous multi-agent testing
+
+Full detail in [agent-personas.md](references/agent-personas.md) and
+[live-testing.md](references/live-testing.md). The heavier counterpart to
+Audit Mode: parallel specialist subagents (recon → injection-hunter,
+auth-hunter, client-side agents in parallel → chain-hypothesis) dispatched
+via the `Agent` tool, sandboxed exploit execution
+(`scripts/sandbox_exec.sh` — real Docker isolation when installed, a
+resource-limited fallback that says loudly it is *not* isolation when it
+isn't), live/dynamic testing including real browser-based XSS/CSRF via the
+Browser tools, and an HTML dashboard.
+
+**Authorization gate, mandatory before any live-target phase:**
+
+```bash
+python scripts/authorize.py record --target <url> --scope owner --by "..."
+# or, for a target the user doesn't own outright but has permission for:
+python scripts/authorize.py record --target <url> --scope third-party \
+  --by "Acme Corp" --note "Bug bounty, scope *.acme.com, ref BB-2026-114"
+python scripts/authorize.py check --target <url>   # gates every phase after
+```
+
+Third-party authorization requires the `--note` — a bare confirmation is not
+enough at that tier. This is on top of the standing Scope and authorization
+rule above, made mechanical here rather than left to memory, because Swarm
+Mode is the mode most likely to actually touch a live target.
+
+Findings from every agent go through the same store as every other mode —
+tag the `tool` field with the agent's name (`auth-hunter agent`, not just
+`scanme`) so `scripts/dashboard.py`'s dashboard shows genuine provenance:
+
+```bash
+python scripts/dashboard.py --root <project> -o dashboard.html
+```
+
+Self-contained HTML, no server — before/after grade, every finding with
+severity and originating agent, recent activity from the ledger's event
+log. **Auto-fix as a PR**, gated behind explicit confirmation (pushing and
+opening PRs are effectful actions, never silently automated):
+
+```bash
+bash scripts/auto_pr.sh <fingerprint>              # prints commands, stops
+CONFIRM=yes bash scripts/auto_pr.sh <fingerprint>   # actually pushes + opens PR
+```
+
+Say plainly where this is lighter than a full platform: multi-agent
+coordination here is through the shared ledger, not live message-passing
+between running agents; the Docker fallback is resource-bounded, not
+isolated; there is no full HTTP traffic interception (recommend Burp/Caido
+for that). Don't let the "swarm" name imply more sophistication than what's
+actually running.
 
 ---
 

@@ -1,0 +1,120 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>scanme — vulnshop (demo API)</title>
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body {
+    font: 14px/1.5 -apple-system, "Segoe UI", sans-serif;
+    background: #0b0f14; color: #e5e7eb; margin: 0; padding: 32px;
+  }
+  .mono { font-family: ui-monospace, "SF Mono", Consolas, monospace; font-size: 12px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .sub { color: #9ca3af; font-size: 12px; margin-bottom: 24px; }
+  .cards { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .card {
+    background: #131a22; border: 1px solid #232d38; border-radius: 10px;
+    padding: 16px 20px; min-width: 140px;
+  }
+  .card .label { color: #9ca3af; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+  .card .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+  .grade-flow { display: flex; align-items: center; gap: 20px; }
+  .grade-box { text-align: center; }
+  .grade-box .letter { font-size: 34px; font-weight: 800; }
+  .grade-box .score { color: #9ca3af; font-size: 12px; }
+  .arrow { color: #6b7280; font-size: 20px; }
+  table { width: 100%; border-collapse: collapse; background: #131a22;
+    border: 1px solid #232d38; border-radius: 10px; overflow: hidden; }
+  th { text-align: left; padding: 10px 12px; background: #1a2129; color: #9ca3af;
+    font-size: 11px; text-transform: uppercase; letter-spacing: .04em; border-bottom: 1px solid #232d38; }
+  td { padding: 10px 12px; border-bottom: 1px solid #1a2129; }
+  tr.row:hover { background: #171f28; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .badge { padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+  .badge-sm { background: #1a2129; padding: 1px 6px; border-radius: 4px; font-size: 10px; }
+  .filters { margin: 16px 0; display: flex; gap: 8px; }
+  .filters button {
+    background: #131a22; border: 1px solid #232d38; color: #e5e7eb;
+    padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;
+  }
+  .filters button.active { background: #2563eb; border-color: #2563eb; }
+  .panel { background: #131a22; border: 1px solid #232d38; border-radius: 10px; padding: 16px 20px; margin-top: 24px; }
+  .panel h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: #9ca3af; margin: 0 0 12px; }
+  .activity-list { list-style: none; margin: 0; padding: 0; max-height: 260px; overflow-y: auto; }
+  .activity-list li { padding: 6px 0; border-bottom: 1px solid #1a2129; font-size: 12px; }
+  .warn { background: #2a1215; border: 1px solid #7f1d1d; color: #fca5a5; padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; font-size: 13px; }
+</style></head>
+<body>
+  <h1>scanme — vulnshop (demo API)</h1>
+  <div class="sub">Generated 2026-08-16T10:10:00Z · scope: Full source review of server.js (4 routes, 176 lines): authentication, session tokens, object-level authorization, SQL query construction, and error handling. Semgrep OSS run with 225 rules. Both findings reproduced against a live instance over HTTP.</div>
+
+  
+
+  <div class="cards">
+    <div class="card">
+      <div class="label">Grade</div>
+      <div class="grade-flow">
+        <div class="grade-box"><div class="letter">D</div><div class="score">40/100</div></div>
+        <div class="arrow">&rarr;</div>
+        <div class="grade-box"><div class="letter">A</div><div class="score">100/100</div></div>
+      </div>
+    </div>
+    <div class="card"><div class="label">Proven</div><div class="value">2</div></div>
+    <div class="card"><div class="label">Fixed</div><div class="value">2</div></div>
+    <div class="card"><div class="label">Open</div><div class="value">0</div></div>
+    <div class="card"><div class="label">Regressed</div><div class="value" style="color:#dc2626">0</div></div>
+  </div>
+
+  <div class="filters">
+    <button class="active" onclick="filterSev('all',this)">All</button>
+    <button onclick="filterSev('critical',this)">Critical</button>
+    <button onclick="filterSev('high',this)">High</button>
+    <button onclick="filterSev('medium',this)">Medium</button>
+    <button onclick="filterSev('low',this)">Low</button>
+  </div>
+
+  <table>
+    <thead><tr><th>Severity</th><th>ID</th><th>Finding</th><th>Location</th><th>Status</th><th>Tier</th><th>Source / agent</th></tr></thead>
+    <tbody id="rows">
+    <tr class="row" data-status="fixed" data-sev="critical">
+      <td><span class="dot" style="background:#dc2626"></span>CRITICAL</td>
+      <td class="mono">idor4471</td>
+      <td>IDOR: GET /api/orders/:id returns any user&#x27;s order</td>
+      <td class="mono">server.js:137</td>
+      <td><span class="badge" style="background:#16a34a20;color:#16a34a;border:1px solid #16a34a55">FIXED</span></td>
+      <td class="mono">T1</td>
+      <td>detect.py (semantic check semgrep has no rule for)</td>
+    </tr>
+
+    <tr class="row" data-status="fixed" data-sev="critical">
+      <td><span class="dot" style="background:#dc2626"></span>CRITICAL</td>
+      <td class="mono">sqli0sea</td>
+      <td>SQL injection in GET /api/search</td>
+      <td class="mono">server.js:155</td>
+      <td><span class="badge" style="background:#16a34a20;color:#16a34a;border:1px solid #16a34a55">FIXED</span></td>
+      <td class="mono">T1</td>
+      <td>detect.py (sink is node:sqlite, unknown to rulesets)</td>
+    </tr></tbody>
+  </table>
+
+  <div class="panel">
+    <h2>Recent activity</h2>
+    <ul class="activity-list"><li><span class="mono" style="color:#9ca3af">2026-08-16T10:08:42Z</span> <span class="badge-sm">fixed</span> <span class="mono">idor4471</span> test=test_order_idor.js commit=</li>
+<li><span class="mono" style="color:#9ca3af">2026-08-16T10:08:41Z</span> <span class="badge-sm">regressed</span> <span class="mono">idor4471</span> was &#x27;fixed&#x27;, reappeared in found.json</li>
+<li><span class="mono" style="color:#9ca3af">2026-08-16T10:08:37Z</span> <span class="badge-sm">fixed</span> <span class="mono">sqli0sea</span> test=test_search_sqli.js commit=</li>
+<li><span class="mono" style="color:#9ca3af">2026-08-16T10:08:37Z</span> <span class="badge-sm">fixed</span> <span class="mono">idor4471</span> test=test_order_idor.js commit=</li>
+<li><span class="mono" style="color:#9ca3af">2026-08-16T10:08:36Z</span> <span class="badge-sm">proven</span> <span class="mono">sqli0sea</span> tier 1: q=&#x27; OR &#x27;1&#x27;=&#x27;1 returned all 3 products vs 1; UNION reached users table</li>
+<li><span class="mono" style="color:#9ca3af">2026-08-16T10:08:36Z</span> <span class="badge-sm">proven</span> <span class="mono">idor4471</span> tier 1: Bob(uid2) GET /orders/4471 -&gt; 200 with Alice card_last4 4242; anon -&gt; 401</li>
+<li><span class="mono" style="color:#9ca3af">2026-08-16T10:08:35Z</span> <span class="badge-sm">discovered</span> <span class="mono">sqli0sea</span> detect.py (sink is node:sqlite, unknown to rulesets)</li>
+<li><span class="mono" style="color:#9ca3af">2026-08-16T10:08:35Z</span> <span class="badge-sm">discovered</span> <span class="mono">idor4471</span> detect.py (semantic check semgrep has no rule for)</li></ul>
+  </div>
+
+  <script>
+    function filterSev(sev, btn) {
+      document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('#rows tr.row').forEach(row => {
+        row.style.display = (sev === 'all' || row.dataset.sev === sev) ? '' : 'none';
+      });
+    }
+  </script>
+</body></html>
