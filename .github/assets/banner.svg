@@ -1,91 +1,140 @@
-<svg width="1280" height="400" viewBox="0 0 1280 400" xmlns="http://www.w3.org/2000/svg">
+<svg width="1400" height="480" viewBox="0 0 1400 480" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0b0f14"/>
-      <stop offset="100%" stop-color="#0f1620"/>
+      <stop offset="0%" stop-color="#0a0e14"/>
+      <stop offset="100%" stop-color="#0d1420"/>
     </linearGradient>
-    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#dc2626" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#16a34a" stop-opacity="0.35"/>
+    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2dd4bf"/>
+      <stop offset="100%" stop-color="#a855f7"/>
     </linearGradient>
-    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="18"/>
+    <linearGradient id="headGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <radialGradient id="radarGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="20"/>
     </filter>
   </defs>
 
-  <rect width="1280" height="400" fill="url(#bg)"/>
-  <circle cx="1040" cy="90" r="180" fill="url(#glow)" filter="url(#soft)"/>
-  <circle cx="120" cy="360" r="140" fill="#2563eb" opacity="0.10" filter="url(#soft)"/>
+  <rect width="1400" height="480" fill="url(#bg)"/>
+  <circle cx="1120" cy="120" r="220" fill="#a855f7" opacity="0.08" filter="url(#soft)"/>
+  <circle cx="120" cy="440" r="160" fill="#2dd4bf" opacity="0.08" filter="url(#soft)"/>
 
-  <g stroke="#1a2129" stroke-width="1">
-    <line x1="0" y1="80" x2="1280" y2="80"/>
-    <line x1="0" y1="320" x2="1280" y2="320"/>
-  </g>
-
-  <g transform="translate(70,120)">
-    <path d="M60 0 L114 22 V70 C114 118 88 150 60 164 C32 150 6 118 6 70 V22 Z"
-          fill="#131a22" stroke="#2563eb" stroke-width="2.5"/>
-    <path d="M42 82 L54 96 L82 60" fill="none" stroke="#16a34a" stroke-width="7"
+  <!-- shield mark -->
+  <g transform="translate(56,42)">
+    <path d="M52 0 L100 19 V62 C100 104 78 132 52 144 C26 132 4 104 4 62 V19 Z"
+          fill="#0f1620" stroke="#2dd4bf" stroke-width="2.5"/>
+    <path d="M36 72 L47 85 L72 52" fill="none" stroke="#22c55e" stroke-width="6.5"
           stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 
-  <text x="220" y="150" font-family="'Segoe UI', system-ui, sans-serif" font-size="72"
-        font-weight="800" fill="#e5e7eb">scan<tspan fill="#16a34a">me</tspan></text>
-  <text x="222" y="188" font-family="'Segoe UI', system-ui, sans-serif" font-size="21"
-        fill="#9ca3af">Proof-based security for any AI coding agent.</text>
+  <!-- wordmark -->
+  <text x="180" y="86" font-family="'Segoe UI', system-ui, sans-serif" font-size="58"
+        font-weight="800" fill="#f1f5f9">scan<tspan fill="#22c55e">me</tspan></text>
 
-  <g font-family="'Segoe UI', system-ui, sans-serif" font-size="14" fill="#9ca3af">
-    <g transform="translate(222,220)">
-      <rect width="150" height="30" rx="15" fill="#131a22" stroke="#232d38"/>
-      <circle cx="18" cy="15" r="4" fill="#dc2626"/>
-      <text x="32" y="20">Proof-tiered audit</text>
+  <!-- universal skill pill -->
+  <g transform="translate(456,44)">
+    <rect width="182" height="34" rx="17" fill="#141c2b" stroke="url(#pillGrad)" stroke-width="1.5"/>
+    <circle cx="24" cy="17" r="8" fill="none" stroke="#2dd4bf" stroke-width="1.5"/>
+    <path d="M17 17 h14 M24 10 v14 M19 12 a10 10 0 0 0 0 10 M29 12 a10 10 0 0 1 0 10"
+          stroke="#2dd4bf" stroke-width="1" fill="none"/>
+    <text x="42" y="22" font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5"
+          font-weight="700" fill="#e2e8f0">Universal Skill</text>
+  </g>
+
+  <!-- headline -->
+  <text x="58" y="176" font-family="'Segoe UI', system-ui, sans-serif" font-size="34" font-weight="800">
+    <tspan fill="#f1f5f9">Proof-based security for </tspan><tspan fill="url(#headGrad)">any AI coding agent.</tspan>
+  </text>
+
+  <!-- subheadline -->
+  <text x="58" y="212" font-family="'Segoe UI', system-ui, sans-serif" font-size="17" fill="#94a3b8">
+    A universal skill that audits, tests, and proves code security — across any agent, any language, any workflow.
+  </text>
+
+  <!-- feature chips -->
+  <g font-family="'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="600">
+    <g transform="translate(58,240)">
+      <rect width="176" height="42" rx="10" fill="#0f1620" stroke="#2dd4bf" stroke-width="1.4"/>
+      <circle cx="26" cy="21" r="8" fill="none" stroke="#2dd4bf" stroke-width="1.5"/>
+      <text x="46" y="26" fill="#e2e8f0">Proof-tiered Audit</text>
     </g>
-    <g transform="translate(384,220)">
-      <rect width="130" height="30" rx="15" fill="#131a22" stroke="#232d38"/>
-      <circle cx="18" cy="15" r="4" fill="#2563eb"/>
-      <text x="32" y="20">Multi-agent</text>
+    <g transform="translate(246,240)">
+      <rect width="176" height="42" rx="10" fill="#0f1620" stroke="#818cf8" stroke-width="1.4"/>
+      <circle cx="26" cy="21" r="8" fill="none" stroke="#818cf8" stroke-width="1.5"/>
+      <text x="46" y="26" fill="#e2e8f0">Multi-Agent Ready</text>
     </g>
-    <g transform="translate(526,220)">
-      <rect width="180" height="30" rx="15" fill="#131a22" stroke="#232d38"/>
-      <circle cx="18" cy="15" r="4" fill="#d97706"/>
-      <text x="32" y="20">Fix + regression test</text>
+    <g transform="translate(434,240)">
+      <rect width="200" height="42" rx="10" fill="#0f1620" stroke="#fb923c" stroke-width="1.4"/>
+      <circle cx="26" cy="21" r="8" fill="none" stroke="#fb923c" stroke-width="1.5"/>
+      <text x="46" y="26" fill="#e2e8f0">Fix + Regression Test</text>
     </g>
-    <g transform="translate(222,262)">
-      <rect width="170" height="30" rx="15" fill="#131a22" stroke="#232d38"/>
-      <circle cx="18" cy="15" r="4" fill="#16a34a"/>
-      <text x="32" y="20">Regression detection</text>
+    <g transform="translate(58,294)">
+      <rect width="196" height="42" rx="10" fill="#0f1620" stroke="#22c55e" stroke-width="1.4"/>
+      <circle cx="26" cy="21" r="8" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+      <text x="46" y="26" fill="#e2e8f0">Regression Detection</text>
     </g>
-    <g transform="translate(404,262)">
-      <rect width="150" height="30" rx="15" fill="#131a22" stroke="#232d38"/>
-      <circle cx="18" cy="15" r="4" fill="#9ca3af"/>
-      <text x="32" y="20">Live HTML report</text>
+    <g transform="translate(266,294)">
+      <rect width="176" height="42" rx="10" fill="#0f1620" stroke="#e879f9" stroke-width="1.4"/>
+      <circle cx="26" cy="21" r="8" fill="none" stroke="#e879f9" stroke-width="1.5"/>
+      <text x="46" y="26" fill="#e2e8f0">Live HTML Report</text>
     </g>
   </g>
 
-  <g transform="translate(870,80)">
-    <rect width="340" height="240" rx="16" fill="#131a22" stroke="#232d38" stroke-width="1.5"/>
-    <text x="24" y="38" font-family="'Segoe UI', system-ui, sans-serif" font-size="12"
-          fill="#9ca3af" letter-spacing="1">VULNSHOP — LIVE DEMO</text>
-
-    <g transform="translate(24,58)" font-family="'Segoe UI', system-ui, sans-serif">
-      <text x="0" y="46" font-size="46" font-weight="800" fill="#ea580c">D</text>
-      <text x="4" y="66" font-size="12" fill="#9ca3af">40/100</text>
-
-      <line x1="78" y1="34" x2="118" y2="34" stroke="#6b7280" stroke-width="2"/>
-      <polygon points="118,28 130,34 118,40" fill="#6b7280"/>
-
-      <text x="150" y="46" font-size="46" font-weight="800" fill="#16a34a">A</text>
-      <text x="156" y="66" font-size="12" fill="#9ca3af">100/100</text>
-    </g>
-
-    <g transform="translate(24,140)" font-family="'Segoe UI', system-ui, sans-serif" font-size="13">
-      <text y="0" fill="#e5e7eb">2 critical vulnerabilities proven</text>
-      <text y="26" fill="#e5e7eb">2 fixed · regression-tested</text>
-      <text y="52" fill="#e5e7eb">Semgrep (225 rules): <tspan fill="#dc2626">0 found</tspan></text>
-      <text y="78" fill="#e5e7eb">Refactor regression: <tspan fill="#16a34a">caught</tspan></text>
+  <!-- terminal command -->
+  <g transform="translate(58,362)">
+    <rect width="640" height="66" rx="12" fill="#0f1620" stroke="#232d38" stroke-width="1.5"/>
+    <text x="20" y="30" font-family="ui-monospace, 'SF Mono', Consolas, monospace" font-size="13.5" fill="#38bdf8">$ git clone https://github.com/Adnaan5sal/scanme</text>
+    <text x="20" y="50" font-family="ui-monospace, 'SF Mono', Consolas, monospace" font-size="13.5" fill="#94a3b8">  &amp;&amp; cd scanme &amp;&amp; bash demo/vulnshop/run_demo.sh</text>
+    <g transform="translate(600,20)" stroke="#64748b" stroke-width="1.4" fill="none">
+      <rect x="0" y="2" width="16" height="16" rx="3"/>
+      <rect x="4" y="-2" width="16" height="16" rx="3" fill="#0f1620"/>
     </g>
   </g>
 
-  <text x="70" y="368" font-family="ui-monospace, 'SF Mono', Consolas, monospace" font-size="15"
-        fill="#6b7280">$ git clone https://github.com/Adnaan5sal/scanme &amp;&amp; bash demo/vulnshop/run_demo.sh</text>
+  <!-- grade card, top right -->
+  <g transform="translate(966,42)">
+    <rect width="376" height="230" rx="16" fill="#0f1620" stroke="#232d38" stroke-width="1.5"/>
+    <circle cx="16" cy="26" r="4" fill="#2dd4bf"/>
+    <text x="30" y="30" font-family="'Segoe UI', system-ui, sans-serif" font-size="12"
+          fill="#94a3b8" letter-spacing="1.5" font-weight="700">VULNSHOP — LIVE DEMO</text>
+
+    <g transform="translate(26,52)" font-family="'Segoe UI', system-ui, sans-serif">
+      <text x="0" y="46" font-size="44" font-weight="800" fill="#fb923c">D</text>
+      <text x="4" y="64" font-size="12" fill="#94a3b8">40/100</text>
+
+      <line x1="76" y1="32" x2="116" y2="32" stroke="#64748b" stroke-width="2"/>
+      <polygon points="116,26 128,32 116,38" fill="#64748b"/>
+
+      <text x="148" y="46" font-size="44" font-weight="800" fill="#22c55e">A</text>
+      <text x="154" y="64" font-size="12" fill="#94a3b8">100/100</text>
+    </g>
+
+    <g transform="translate(26,138)" font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+      <text y="0" fill="#e2e8f0">2 critical vulnerabilities proven</text>
+      <text y="27" fill="#e2e8f0">2 fixed · regression-tested</text>
+      <text y="54" fill="#e2e8f0">Semgrep (225 rules): <tspan fill="#f87171">0 found</tspan></text>
+      <text y="81" fill="#e2e8f0">Refactor regression: <tspan fill="#22c55e">caught</tspan></text>
+    </g>
+  </g>
+
+  <!-- radar scan visual -->
+  <g transform="translate(1154,330)">
+    <circle cx="0" cy="0" r="95" fill="url(#radarGrad)"/>
+    <circle cx="0" cy="0" r="70" fill="none" stroke="#1e293b" stroke-width="1"/>
+    <circle cx="0" cy="0" r="42" fill="none" stroke="#1e293b" stroke-width="1"/>
+    <circle cx="0" cy="0" r="14" fill="none" stroke="#1e293b" stroke-width="1"/>
+    <line x1="-95" y1="0" x2="95" y2="0" stroke="#1e293b" stroke-width="1"/>
+    <line x1="0" y1="-95" x2="0" y2="95" stroke="#1e293b" stroke-width="1"/>
+    <circle cx="0" cy="0" r="4" fill="#2dd4bf"/>
+    <circle cx="-58" cy="-30" r="5" fill="#38bdf8"/>
+    <circle cx="44" cy="-52" r="5" fill="#a855f7"/>
+    <circle cx="60" cy="38" r="5" fill="#22c55e"/>
+    <circle cx="-40" cy="56" r="5" fill="#fb923c"/>
+  </g>
 </svg>

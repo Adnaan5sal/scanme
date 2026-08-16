@@ -20,6 +20,14 @@ Python/Bash scripts any agent can call directly.
 
 [See it prove a real bug in 20 seconds ↓](#see-it-work--20-seconds-no-install) · [Live dashboard demo](https://claude.ai/code/artifact/3f29f754-771d-444f-b756-9c60da0c921a) · [Install](#install)
 
+### 🌐 One skill. Any agent. All modes. Any language.
+
+| 🛡️ Proof-Based Security | 🤖 Agent-Agnostic | 🧪 Tested. Fixed. Verified. | 📈 Actionable Reports |
+|---|---|---|---|
+| Evidence-backed findings with reproducible proof, not just warnings. | Works with Claude, GPT, Gemini, Copilot, Cursor, and any other AI coding agent. | Auto-fix, run regression tests, and catch issues before they ship. | Live HTML reports with risk scoring, rule coverage, and remediation guidance. |
+
+**⭐ Star the repo if `scanme` helps you build safer, smarter, faster.**
+
 </div>
 
 ---
