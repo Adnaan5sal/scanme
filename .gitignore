@@ -1,0 +1,16 @@
+# Runtime state the skill generates - never part of the source
+.scanme/
+.hackme/
+
+# Scan tool output
+.semgrep.json
+*.sarif
+found.json
+
+# Python
+__pycache__/
+*.pyc
+
+# OS cruft
+.DS_Store
+Thumbs.db
