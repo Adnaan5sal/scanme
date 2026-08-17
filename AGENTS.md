@@ -394,7 +394,26 @@ same report.
 
 ## AI Security Mode — LLM-specific threats
 
-Full detail in [ai-threats.md](references/ai-threats.md): indirect prompt
+**Run the auditor first, then reason about what it found:**
+
+```bash
+python scripts/ai_audit_cli.py discover <path>       # map the AI surface, no findings
+python scripts/ai_audit_cli.py scan <path> --root .  # discover + analyze + ingest
+```
+
+This is real static analysis (Discovery, Prompt, Agent/Tool, and RAG
+analyzers — see
+[ai-audit-architecture.md](references/ai-audit-architecture.md) for which
+of the requested 12 engines are implemented vs. designed but not yet
+built), not a checklist to reason through by hand. It finds structural
+evidence — untrusted content flowing into a prompt with no boundary, a
+dangerous tool with no validation, a retrieval call with no tenant filter —
+and ingests candidates into the same ledger every other mode uses. Proof
+discipline is identical to Audit Mode Phase 3: everything it finds is a
+`candidate` until traced with no gap or reproduced live; nothing is
+auto-promoted.
+
+Full threat-class detail in [ai-threats.md](references/ai-threats.md): indirect prompt
 injection, RAG authorization and tenant isolation, agent/tool privilege,
 output handling, cost/abuse controls, data privacy. Only applicable when the
 app calls an LLM.

@@ -1,6 +1,6 @@
 # 🛡️ Security Audit — vulnshop (demo API)
 
-*Generated 2026-08-16 · 3 scan runs · every finding below was proven before it was reported.*
+*Generated 2026-08-17 · 3 scan runs · every finding below was proven before it was reported.*
 
 ---
 
@@ -27,9 +27,9 @@ Full source review of server.js (4 routes, 176 lines): authentication, session t
 
 | # | When | What ran |
 |---|------|----------|
-| 1 | 2026-08-16 11:00 | initial audit |
-| 2 | 2026-08-16 11:00 | clean re-scan |
-| 3 | 2026-08-16 11:00 | post-refactor scan |
+| 1 | 2026-08-17 10:37 | initial audit |
+| 2 | 2026-08-17 10:37 | clean re-scan |
+| 3 | 2026-08-17 10:37 | post-refactor scan |
 
 ---
 
